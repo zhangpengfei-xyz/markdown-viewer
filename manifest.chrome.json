@@ -49,13 +49,25 @@
     }
   ],
 
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "javbus_image_referer",
+        "enabled": true,
+        "path": "rules/javbus-image-referer.json"
+      }
+    ]
+  },
+
   "permissions": [
+    "declarativeNetRequest",
     "storage",
     "scripting"
   ],
 
   "host_permissions": [
-    "file:///*"
+    "file:///*",
+    "*://www.javbus.com/*"
   ],
 
   "optional_host_permissions": [

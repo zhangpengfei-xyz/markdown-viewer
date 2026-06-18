@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "requestHeaders": [
+        {
+          "header": "referer",
+          "operation": "set",
+          "value": "https://www.javbus.com/"
+        }
+      ]
+    },
+    "condition": {
+      "urlFilter": "||www.javbus.com^",
+      "resourceTypes": [
+        "image"
+      ]
+    }
+  }
+]

@@ -108,8 +108,8 @@ sequenceDiagram
 
 | 文件 | 设计说明 |
 | --- | --- |
-| `manifest.chrome.json` | Chrome MV3 配置，使用 `service_worker`，声明 `storage`、`scripting`、`file:///*`，并把站点权限和 `webRequest` 作为可选权限 |
-| `manifest.firefox.json` | Firefox 配置，后台脚本显式列出 vendor、编译器和后台模块；可选权限中包含 `webRequest` 与远程来源 |
+| `manifest.chrome.json` | Chrome MV3 配置，使用 `service_worker`，声明 `storage`、`scripting`、`file:///*`、Javbus 图片请求头规则，并把站点权限和 `webRequest` 作为可选权限 |
+| `manifest.firefox.json` | Firefox 配置，后台脚本显式列出 vendor、编译器和后台模块；声明 Javbus 图片请求头规则；可选权限中包含 `webRequest` 与远程来源 |
 | `background/index.js` | 后台组合根，按依赖顺序加载脚本，实例化服务，注册 `tabs.onUpdated` 和 `runtime.onMessage` |
 
 入口采用全局命名空间 `md` 组装模块，各文件通过向 `md` 挂载工厂函数实现弱模块化。优点是没有构建器时也容易运行；代价是依赖顺序强、全局变量约束多。
@@ -341,6 +341,7 @@ md.compilers[name] = (() => {
 | `content/emoji.js` | 将 `:shortname:` 转换为 EmojiOne 图片 |
 | `content/scroll.js` | 等待样式、图片、代码高亮、Mermaid、MathJax 完成后恢复滚动位置，并持久化文档和 ToC 滚动 |
 | `content/autoreload.js` | 定时拉取当前文档，内容变化时触发重新渲染 |
+| `rules/javbus-image-referer.json` | 使用 `declarativeNetRequest` 为 `www.javbus.com` 图片请求设置 `referer` 请求头 |
 
 ### 4.9 Popup 模块
 
@@ -455,7 +456,7 @@ flowchart TD
    - Prism
    - Remark
    - themes
-4. 复制源码目录、生成的 `themes/`、`vendor/`、LICENSE 到临时包目录。
+4. 复制源码目录、请求规则、生成的 `themes/`、`vendor/`、LICENSE 到临时包目录。
 5. 根据目标浏览器复制对应 manifest 为 `manifest.json`。
 6. 生成 `markdown-viewer.zip`。
 

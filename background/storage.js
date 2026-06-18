@@ -82,6 +82,8 @@ md.storage.bug = (res) => {
   // reload extension bug
   chrome.permissions.getAll((permissions) => {
     var origins = Object.keys(res.origins || {})
+      .concat((chrome.runtime.getManifest().host_permissions || [])
+        .map((origin) => origin.slice(0, -2)))
     chrome.permissions.remove({
       origins: permissions.origins
         .filter((origin) => origins.indexOf(origin.slice(0, -2)) === -1)
