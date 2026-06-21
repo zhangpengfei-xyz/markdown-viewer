@@ -40,6 +40,7 @@
       "/background/webrequest.js",
       "/background/detect.js",
       "/background/inject.js",
+      "/background/heiliao-images.js",
       "/background/messages.js",
       "/background/mathjax.js",
       "/background/xhr.js",
@@ -89,7 +90,9 @@
 
   "host_permissions": [
     "file:///*",
-    "*://www.javbus.com/*"
+    "*://www.javbus.com/*",
+    "https://heiliao.com/*",
+    "https://pic.uforxk.cn/*"
   ],
 
   "optional_permissions": [

@@ -67,7 +67,9 @@
 
   "host_permissions": [
     "file:///*",
-    "*://www.javbus.com/*"
+    "*://www.javbus.com/*",
+    "https://heiliao.com/*",
+    "https://pic.uforxk.cn/*"
   ],
 
   "optional_host_permissions": [

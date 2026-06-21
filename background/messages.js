@@ -1,5 +1,5 @@
 
-md.messages = ({storage: {defaults, state, set}, compilers, mathjax, xhr, webrequest, icon}) => {
+md.messages = ({storage: {defaults, state, set}, compilers, mathjax, xhr, webrequest, icon, heiliaoImages}) => {
 
   return (req, sender, sendResponse) => {
 
@@ -42,6 +42,11 @@ md.messages = ({storage: {defaults, state, set}, compilers, mathjax, xhr, webreq
         ],
         injectImmediately: true
       }, sendResponse)
+    }
+    else if (req.message === 'heiliao.decryptImage') {
+      heiliaoImages.decrypt(req.url)
+        .then((res) => sendResponse(Object.assign({message: 'heiliao.decryptedImage'}, res)))
+        .catch((err) => sendResponse({error: err.message || String(err)}))
     }
 
     // popup

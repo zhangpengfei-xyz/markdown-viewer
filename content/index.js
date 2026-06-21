@@ -68,6 +68,9 @@ chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
   }
   else if (req.message === 'raw') {
     state.raw = req.raw
+    if (state.raw && typeof heiliaoImages !== 'undefined') {
+      heiliaoImages.reset()
+    }
     state.reload.md = true
     m.redraw()
   }
@@ -88,6 +91,9 @@ var onupdate = {
       state.reload.md = false
       update(true)
     }
+    else if (!state.raw && typeof heiliaoImages !== 'undefined') {
+      setTimeout(() => heiliaoImages.render(), 0)
+    }
   },
   theme: () => {
     if (state.content.mermaid) {
@@ -97,6 +103,10 @@ var onupdate = {
 }
 
 var update = (update) => {
+  if (!state.raw && typeof heiliaoImages !== 'undefined') {
+    heiliaoImages.render()
+  }
+
   scroll(update)
 
   if (state.content.syntax) {
@@ -119,6 +129,9 @@ var render = (md) => {
     compiler: state.compiler,
     markdown: frontmatter(state.markdown)
   }, (res) => {
+    if (typeof heiliaoImages !== 'undefined') {
+      heiliaoImages.reset()
+    }
     state.html = res.html
     if (state.content.emoji) {
       state.html = emojinator(state.html)
@@ -133,6 +146,9 @@ var render = (md) => {
       state.toc = toc.render(state.html)
     }
     state.html = anchors(state.html)
+    if (typeof heiliaoImages !== 'undefined') {
+      state.html = heiliaoImages.preprocess(state.html)
+    }
     m.redraw()
   })
 }
